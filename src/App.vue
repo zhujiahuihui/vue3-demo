@@ -1,11 +1,20 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Setup</router-link> |
+    <router-link to="/ref">ref</router-link>|
+    <router-link to="/customRef">customRef</router-link> |
+    <router-link to="/reactive">reactive</router-link>|
+    <router-link to="/readonly">readonly</router-link> |
+    <router-link to="/markRaw">markRaw</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
-
+<script>
+export default {
+  name: "Home",
+  setup() {},
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
