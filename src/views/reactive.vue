@@ -1,11 +1,12 @@
 <template>
   <div class="home">
-    <h3>reactive</h3>
+    <h1>reactive</h1>
 
     <p>{{ state.a }}</p>
     <p>{{ state.b.c }}</p>
     <p>{{ state.b.d.e }}</p>
     <p>{{ state.b.d.f.g }}</p>
+    <h1>shallowReactive</h1>
     <button @click="change">shallowReactive</button>
     <p>{{ shallowReactiveState.foo }}</p>
     <p>{{ shallowReactiveState.nested }}</p>
@@ -46,7 +47,6 @@ import { watchEffect, ref, isReactive, reactive, shallowReactive } from "vue";
  * 只为某个对象的（第一层）属性创建浅层的响应式代理，不会对“属性的属性”做深层次、递归地响应式代理，而只是保留原样。
  *
  */
-
 function myReative(value) {
   if (typeof value === "object") {
     if (value instanceof Array) {
@@ -80,6 +80,7 @@ function myReative(value) {
     console.log("不是对象");
   }
 }
+
 export default {
   name: "Home",
   setup() {
@@ -101,7 +102,6 @@ export default {
     (state.a = 1), (state.b.c = 2), (state.b.d.e = 3), (state.b.d.f.g = 4);
     /**
      * watchEffect
-     *
      * watchEffect与watch的不同？
      * 1、watchEffect不需要指定监听属性，可以自动收集依赖，属性变更的时候都会执行，watch只能监听指定属性的变更
      * 2、watch可以取到新值和旧值，watchEffect拿不到
@@ -114,12 +114,15 @@ export default {
     }, 1000);
     // 停止监听
     let stop = watchEffect(() => {
-      console.log(value.value);
+      console.log(value.value);//0
     });
     stop();
-    
+
     //isReactive
-    let arr = reactive({ name: "晓红" });
+    let arr = reactive({ name: "晓红",age:{
+      a:1
+    } });
+    console.log(arr)
     let arr1 = isReactive(arr);
     console.log(arr1); //true
 
@@ -130,13 +133,15 @@ export default {
         bar: 2,
       },
     });
+
     let change = () => {
       shallowReactiveState.foo++;
       // 但不会深层代理
       shallowReactiveState.nested.bar = 90;
-      console.log(shallowReactiveState.nested); //{bar: 3}非响应时的
-      console.log(isReactive(shallowReactiveState.nested));
+      console.log(shallowReactiveState.nested,11111); //{bar: 3}非响应时的
+      console.log(isReactive(shallowReactiveState.nested),11111);
     };
+
     return { state, value, change, shallowReactiveState };
   },
 };

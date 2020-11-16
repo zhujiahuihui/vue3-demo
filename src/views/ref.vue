@@ -2,20 +2,24 @@
   <div class="about">
     <h1>ref</h1>
     <button @click="change">count is: {{ count }}</button>
+
     <h4 ref="element">通过ref获取元素</h4>
+
+
+
     <h1>toRef</h1>
     <h3>reactive响应式数据类型转ref——{{ state.a }}</h3>
     <h3>引用对象转ref——{{ obj.name }}</h3>
     <button @click="changeToref">changeToref</button>
-    <h4>torefs</h4>
+    <h1>torefs</h1>
     <p>{{ foo }}</p>
     <p>{{ bar }}</p>
-    <h4>shallowRef</h4>
+    <h1>shallowRef</h1>
     <p>值:{{ shallowRefState }}</p>
     <button @click="myFn1">基本数据类型</button>
     <p>值:{{ shallowRefStates }}</p>
     <button @click="myFn2">引用数据类型-对数据进行修改</button>
-    <h4>triggerRef</h4>
+    <h1>triggerRef</h1>
     <p>triggerRefState展示:{{ triggerRefState }}</p>
     <button @click="myFn3">使用triggerRef</button>
   </div>
@@ -86,30 +90,34 @@ export default {
   setup() {
     //ref——isRef
     let count = ref(0); // { value: 0 }
+    let count1=reactive({name:'lisi'})
     let element = ref(null);
     let a = 1;
     onMounted(() => {
       console.log(element.value); //ref获取<h4>通过ref获取元素</h4>
     });
-    console.log(isRef(count)); //true
+    const change = () => {};
+
+    console.log(isRef(count1)); //true
+
     console.log(unref(count)); //0获取ref中value值
     console.log(isRef(a)); //false
-
     // toRef
     let state = reactive({ a: 1 });
     state.a = "李四";
-    console.log(toRef(state)); //reactive数据类型——ref数据类型
+    console.log(toRef(state),1111111111111); //reactive数据类型——ref数据类型
 
     let obj = { name: "大脚" };
     let stateToref = toRef(obj, "name"); //引用数据类型——ref数据类型
     const changeToref = () => {
       stateToref.value = "张三";
-      console.log("obj", stateToref.value); //数据类型发生改变, 界面也不会自动更新
+      console.log("obj", stateToref.value,11111111111); //数据类型发生改变, 界面也不会自动更新
     };
 
     // toRefs
     let { foo, bar } = useFeatureX();
     console.log(foo, bar); //ref数据类型
+
 
     //shallowRef——基本数据修改，页面更新【创建浅层的 ref】
     let shallowRefState = shallowRef(1);
@@ -120,7 +128,7 @@ export default {
           c: "c-new",
         },
       };
-      console.log(shallowRefStates);
+      console.log(shallowRefStates,111111111111);
       shallowRefState.value = 2; //
       // 点击按钮，页面会显2
       // 也就是对value进行修改可以触发页面更新
@@ -153,7 +161,7 @@ export default {
       triggerRefState.value.b.c = "1";
       triggerRef(triggerRefState);
     };
-    const change = () => count.value++;
+
     return {
       count,
       change,
